@@ -4,7 +4,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { animated, useSpring } from '@react-spring/web';
 import { TransitionProps } from '@mui/material/transitions';
-import { Box, Button, CardContent, Collapse, Typography } from '@mui/material';
+import { Box, Button, Collapse, Typography } from '@mui/material';
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
 import { unstable_useTreeItem2 as useTreeItem2, UseTreeItem2Parameters } from '@mui/x-tree-view/useTreeItem2';
 import { TreeItem2Content, TreeItem2IconContainer, TreeItem2Label, TreeItem2Root } from '@mui/x-tree-view/TreeItem2';

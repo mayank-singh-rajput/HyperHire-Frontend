@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stack, IconButton, useTheme, useMediaQuery } from '@mui/material';
+import { Stack, IconButton } from '@mui/material';
 import NavbarBreadcrumbs from './NavbarBreadcrumbs';
 import Image from 'next/image';
 import OpenIcon from '../assets/menu_open.svg';

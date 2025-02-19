@@ -23,7 +23,7 @@ type FolderValidationInterface = z.infer<typeof FolderValidation>;
 
 export default function FolderForm() {
     const queryClient = useQueryClient();
-    const folderData = queryClient.getQueryData(['folders']) as any || [];
+    const folderData = queryClient.getQueryData(['folders']) as FolderValidationInterface[] || [];
 
     const { control, reset, handleSubmit } = useForm<FolderValidationInterface>({
         resolver: zodResolver(FolderValidation),
@@ -163,7 +163,7 @@ export default function FolderForm() {
                             displayEmpty
                             value=""
                         >
-                            {folderData && folderData?.map((folder: any) => (
+                            {folderData && folderData?.map((folder: FolderValidationInterface) => (
                                 <MenuItem key={folder.id} value={folder.id}>
                                     {folder.name}
                                 </MenuItem>

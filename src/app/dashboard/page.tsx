@@ -56,7 +56,7 @@ export default function Dashboard({ data }: FolderTreeViewProps) {
                     value=""
                 >
                     <MenuItem value="" disabled>Select Parent Folder</MenuItem>
-                    {data && data?.map((folder: any) => (
+                    {data && data?.map((folder: TreeViewProps) => (
                         <MenuItem key={folder.id} value={folder.id}>
                             {folder.label}
                         </MenuItem>

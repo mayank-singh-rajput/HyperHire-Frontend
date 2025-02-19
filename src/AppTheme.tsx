@@ -4,11 +4,10 @@ import type { ThemeOptions } from '@mui/material/styles';
 
 interface AppThemeProps {
     children: React.ReactNode;
-    themeComponents?: ThemeOptions['components'];
 }
 
 export default function AppTheme(props: AppThemeProps) {
-    const { children, themeComponents } = props;
+    const { children } = props;
     const theme = React.useMemo(() => {
         return createTheme({
             cssVariables: {
@@ -16,7 +15,7 @@ export default function AppTheme(props: AppThemeProps) {
                 cssVarPrefix: 'template',
             }
         });
-    }, [themeComponents]);
+    }, []);
     return (
         <ThemeProvider theme={theme} disableTransitionOnChange>
             {children}

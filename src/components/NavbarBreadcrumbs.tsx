@@ -12,7 +12,7 @@ import FolderIcon from '../assets/folder.svg';
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
     margin: theme.spacing(1, 0),
     [`& .${breadcrumbsClasses.separator}`]: {
-        color: ((theme as any).vars || theme).palette.action.disabled,
+        color: theme.palette.action.disabled,
         margin: 1,
     },
     [`& .${breadcrumbsClasses.ol}`]: {
@@ -25,7 +25,7 @@ export default function NavbarBreadcrumbs() {
     const path = pathname.split('/dashboard/')?.[1]?.split('/').map((word) => word.charAt(0).toUpperCase() + word.slice(1)) || 'Menu';
 
     return (
-        <StyledBreadcrumbs aria-label="breadcrumb" separator={<NavigateNextRoundedIcon fontSize="small" />} sx={{paddingTop: 0}}>
+        <StyledBreadcrumbs aria-label="breadcrumb" separator={<NavigateNextRoundedIcon fontSize="small" />} sx={{ paddingTop: 0 }}>
             <IconButton>
                 <Image src={FolderIcon} alt="Folder Icon" />
             </IconButton>
