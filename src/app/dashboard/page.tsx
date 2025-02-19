@@ -49,6 +49,7 @@ export default function Dashboard() {
                         },
                     }}
                     value={selectedFolder}
+                    onChange={(e) => setSelectedFolder(e.target.value)}
                 >
                     <MenuItem value="" disabled>Select Parent Folder</MenuItem>
                     {folderData && folderData?.map((folder) => (
@@ -59,12 +60,13 @@ export default function Dashboard() {
                 </Select>
             </Box>
 
-            <Box sx={{
-                display: 'flex',
-                width: '100%',
-                flexDirection: { xs: 'column', sm: 'row' },
-                gap: 4
-            }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    gap: 4
+                }}>
                 <Box sx={{ flex: 1 }}>
                     <FolderTreeView />
                 </Box>
