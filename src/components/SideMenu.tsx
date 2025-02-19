@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { drawerClasses } from '@mui/material/Drawer';
-import { Box, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Drawer, IconButton } from '@mui/material';
 import SideContent from './SideContent';
 import Image from 'next/image';
 import AppIcon from '../assets/icon.svg';
