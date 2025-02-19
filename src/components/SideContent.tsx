@@ -7,29 +7,24 @@ import ActiveFolderIcon from '../assets/folder_active.svg';
 import InActiveFolderIcon from '../assets/folder_inactive.svg';
 import ActiveMenuIcon from '../assets/menu_active.svg';
 import InActiveMenuIcon from '../assets/menu_inactive.svg';
+import FormateTreeData, { TreeItems } from '../utils/formateData';
+import { useQueryClient } from '@tanstack/react-query';
 
-type TreeViewProps = {
-    id: string;
-    label?: string;
-    children?: TreeViewProps[];
-};
+export default function SideContent() {
+    const queryClient = useQueryClient();
+    const folderData = queryClient.getQueryData(['folders']) as TreeItems[] || [];
+    const data = FormateTreeData(folderData);
+    const [activeFolder, setActiveFolder] = React.useState<TreeItems>(data?.[0]);
+    const [activeChildren, setActiveChildren] = React.useState<TreeItems>(activeFolder?.children?.[0] as TreeItems);
 
-interface SideMenuProps {
-    data: TreeViewProps[];
-}
-
-export default function SideContent({ data }: SideMenuProps) {
-    const [activeFolder, setActiveFolder] = React.useState<TreeViewProps>(data?.[0]);
-    const [activeChildren, setActiveChildren] = React.useState<TreeViewProps>(activeFolder?.children?.[0] as TreeViewProps);
-
-    const handleFolderClick = (folder: TreeViewProps) => {
+    const handleFolderClick = (folder: TreeItems) => {
         if (activeFolder?.id !== folder?.id) {
             setActiveFolder(folder);
             setActiveChildren({ id: "", label: "" });
         }
     };
 
-    const handleChildrenClick = (children: TreeViewProps, folder: TreeViewProps) => {
+    const handleChildrenClick = (children: TreeItems, folder: TreeItems) => {
         if (activeFolder?.id !== folder?.id) {
             setActiveFolder(folder);
             setActiveChildren(folder?.children ? folder?.children?.[0] : { id: "", label: "" });

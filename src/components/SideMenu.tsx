@@ -6,19 +6,12 @@ import Image from 'next/image';
 import AppIcon from '../assets/icon.svg';
 import CloseIcon from '../assets/menu_close.svg';
 
-type TreeViewProps = {
-    id: string;
-    label?: string;
-    children?: TreeViewProps[];
-};
-
 interface SideMenuProps {
     open: boolean | undefined;
     toggleDrawer: (newOpen: boolean) => () => void;
-    data: TreeViewProps[];
 }
 
-export default function SideMenu({ open, toggleDrawer, data }: SideMenuProps) {
+export default function SideMenu({ open, toggleDrawer }: SideMenuProps) {
     return (
         <Drawer
             open={open}
@@ -51,7 +44,7 @@ export default function SideMenu({ open, toggleDrawer, data }: SideMenuProps) {
                     <Image src={CloseIcon} alt="Close Icon" />
                 </IconButton>
             </Box>
-            <SideContent data={data} />
+            <SideContent />
         </Drawer>
     );
 }

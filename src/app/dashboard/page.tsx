@@ -6,19 +6,24 @@ import Image from 'next/image';
 import TitleIcon from '../../assets/icon-title.svg';
 import FolderTreeView from '@/components/folder-tree';
 import FolderForm from '@/components/folder-form';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import FormateTreeData from '../../utils/formateData';
 
-type TreeViewProps = {
-    id: string;
-    label?: string;
-    parentId?: string;
-    children?: TreeViewProps[];
-};
-
-interface FolderTreeViewProps {
-    data: TreeViewProps[];
+const fetchFolder = async () => {
+    const response = await axios.get('/api/folder/fetch');
+    return response?.data;
 }
 
-export default function Dashboard({ data }: FolderTreeViewProps) {
+export default function Dashboard() {
+    const { data: folderData } = useQuery({
+        queryKey: ['folders'],
+        queryFn: fetchFolder,
+        select: (data) => data
+    })
+
+    const data = FormateTreeData(folderData);
+
     return (
         <Stack display="column">
             <Box
@@ -56,7 +61,7 @@ export default function Dashboard({ data }: FolderTreeViewProps) {
                     value=""
                 >
                     <MenuItem value="" disabled>Select Parent Folder</MenuItem>
-                    {data && data?.map((folder: TreeViewProps) => (
+                    {data && data?.map((folder) => (
                         <MenuItem key={folder.id} value={folder.id}>
                             {folder.label}
                         </MenuItem>
