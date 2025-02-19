@@ -14,20 +14,21 @@ export default function SideContent() {
     const queryClient = useQueryClient();
     const folderData = queryClient.getQueryData(['folders']) as TreeItems[] || [];
     const data = FormateTreeData(folderData);
+    
     const [activeFolder, setActiveFolder] = React.useState<TreeItems>(data?.[0]);
     const [activeChildren, setActiveChildren] = React.useState<TreeItems>(activeFolder?.children?.[0] as TreeItems);
 
     const handleFolderClick = (folder: TreeItems) => {
         if (activeFolder?.id !== folder?.id) {
             setActiveFolder(folder);
-            setActiveChildren({ id: "", label: "" });
+            setActiveChildren({ id: "", name: "" });
         }
     };
 
     const handleChildrenClick = (children: TreeItems, folder: TreeItems) => {
         if (activeFolder?.id !== folder?.id) {
             setActiveFolder(folder);
-            setActiveChildren(folder?.children ? folder?.children?.[0] : { id: "", label: "" });
+            setActiveChildren(folder?.children ? folder?.children?.[0] : { id: "", name: "" });
         }
         setActiveChildren(children);
     };
@@ -66,7 +67,7 @@ export default function SideContent() {
                                     alt="Folder Icon"
                                     style={{ width: "24px", height: "24px" }}
                                 />
-                                <ListItemText primary={folder.label} />
+                                <ListItemText primary={folder.name} />
                             </ListItemButton>
 
                             {folder.children?.map((children, childrenIndex) => {
@@ -100,7 +101,7 @@ export default function SideContent() {
                                                 alt="Menu Icon"
                                                 style={{ width: "24px", height: "24px" }}
                                             />
-                                            <ListItemText primary={children.label} />
+                                            <ListItemText primary={children.name} />
                                         </ListItemButton>
                                     </ListItem>
                                 );

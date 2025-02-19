@@ -2,7 +2,7 @@ import { TreeViewBaseItem } from "@mui/x-tree-view/models";
 
 export type TreeItems = {
     id: string;
-    name?: string;
+    name: string;
     label?: string;
     parentId?: string;
     children?: TreeItems[];
@@ -12,17 +12,18 @@ export default function FormateTreeData(data: TreeItems[]) {
     const map = new Map<string, TreeItems>();
     const result: TreeItems[] = [];
 
-    data?.forEach(item => {
+    for(const item of data) {
         const treeItem: TreeViewBaseItem<TreeItems> = {
             id: item.id,
+            name: item.name,
             label: item.name,
             parentId: item.parentId,
             children: [],
         };
         map.set(item.id, treeItem);
-    });
+    };
 
-    data?.forEach(item => {
+    for(const item of data) {
         const treeItem = map.get(item.id);
 
         if (item.parentId) {
@@ -33,7 +34,7 @@ export default function FormateTreeData(data: TreeItems[]) {
         } else {
             result.push(treeItem!);
         }
-    });
+    };
 
     return result;
 }

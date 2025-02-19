@@ -10,6 +10,8 @@ import { unstable_useTreeItem2 as useTreeItem2, UseTreeItem2Parameters } from '@
 import { TreeItem2Content, TreeItem2IconContainer, TreeItem2Label, TreeItem2Root } from '@mui/x-tree-view/TreeItem2';
 import { TreeItem2Icon } from '@mui/x-tree-view/TreeItem2Icon';
 import { TreeItem2Provider } from '@mui/x-tree-view/TreeItem2Provider';
+import FormateTreeData, { TreeItems } from '../utils/formateData';
+import { useQueryClient } from '@tanstack/react-query';
 
 const AnimatedCollapse = animated(Collapse);
 
@@ -73,18 +75,11 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(props: CustomTre
     );
 });
 
-type TreeViewProps = {
-    id: string;
-    label?: string;
-    parentId?: string;
-    children?: TreeViewProps[];
-};
+export default function FolderTreeView() {
+    const queryClient = useQueryClient();
+    const folderData = queryClient.getQueryData(['folders']) as TreeItems[] || [];
+    const data = FormateTreeData(folderData);
 
-interface FolderTreeViewProps {
-    data: TreeViewProps[];
-}
-
-export default function FolderTreeView({ data }: FolderTreeViewProps) {
     return (
         <Box>
             <Box sx={{ my: 2, display: 'flex', gap: 2 }}>

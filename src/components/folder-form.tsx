@@ -9,6 +9,7 @@ import { z } from 'zod';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
+import { TreeItems } from '../utils/formateData';
 
 const FolderValidation = z.object({
     id: z.string()
@@ -23,7 +24,7 @@ type FolderValidationInterface = z.infer<typeof FolderValidation>;
 
 export default function FolderForm() {
     const queryClient = useQueryClient();
-    const folderData = queryClient.getQueryData(['folders']) as FolderValidationInterface[] || [];
+    const folderData = queryClient.getQueryData(['folders']) as TreeItems[] || [];
 
     const { control, reset, handleSubmit } = useForm<FolderValidationInterface>({
         resolver: zodResolver(FolderValidation),
@@ -40,7 +41,7 @@ export default function FolderForm() {
                 toast.success('Folder Created.', {
                     style: { borderRadius: '10px', background: '#333', color: '#fff' },
                 });
-            });
+            });            
         },
         onError: (error: Error) => {
             const errorMessage = error?.message || 'An unexpected error occurred.';
@@ -161,9 +162,8 @@ export default function FolderForm() {
                                 },
                             }}
                             displayEmpty
-                            value=""
                         >
-                            {folderData && folderData?.map((folder: FolderValidationInterface) => (
+                            {folderData && folderData?.map((folder) => (
                                 <MenuItem key={folder.id} value={folder.id}>
                                     {folder.name}
                                 </MenuItem>

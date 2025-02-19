@@ -6,23 +6,13 @@ import Image from 'next/image';
 import TitleIcon from '../../assets/icon-title.svg';
 import FolderTreeView from '@/components/folder-tree';
 import FolderForm from '@/components/folder-form';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import FormateTreeData from '../../utils/formateData';
-
-const fetchFolder = async () => {
-    const response = await axios.get('/api/folder/fetch');
-    return response?.data;
-}
+import { useQueryClient } from '@tanstack/react-query';
+import { TreeItems } from '../../utils/formateData';
 
 export default function Dashboard() {
-    const { data: folderData } = useQuery({
-        queryKey: ['folders'],
-        queryFn: fetchFolder,
-        select: (data) => data
-    })
-
-    const data = FormateTreeData(folderData);
+    const queryClient = useQueryClient();
+    const folderData = queryClient.getQueryData(['folders']) as TreeItems[] || [];
+    const [selectedFolder, setSelectedFolder] = React.useState<string | null>(null);
 
     return (
         <Stack display="column">
@@ -58,12 +48,12 @@ export default function Dashboard() {
                             right: '12px',
                         },
                     }}
-                    value=""
+                    value={selectedFolder}
                 >
                     <MenuItem value="" disabled>Select Parent Folder</MenuItem>
-                    {data && data?.map((folder) => (
+                    {folderData && folderData?.map((folder) => (
                         <MenuItem key={folder.id} value={folder.id}>
-                            {folder.label}
+                            {folder.name}
                         </MenuItem>
                     ))}
                 </Select>
@@ -76,7 +66,7 @@ export default function Dashboard() {
                 gap: 4
             }}>
                 <Box sx={{ flex: 1 }}>
-                    <FolderTreeView data={data} />
+                    <FolderTreeView />
                 </Box>
                 <Box sx={{ flex: 1 }}>
                     <FolderForm />
